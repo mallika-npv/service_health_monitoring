@@ -1,0 +1,71 @@
+input[type="date"] {
+    margin-left: 250px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+table {
+    margin-left: 250px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    margin-left: 250px;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+tr:nth-child(even) {
+    margin-left: 250px;
+    background-color: #f2f2f2;
+}
+th {
+    margin-left: 250px;
+    background-color: #4CAF50;
+    color: white;
+}
+.dt{
+    margin: 10px 250px;
+    padding: 20px;
+}
+.service{
+    background-color: #555;
+    padding: 10px 15px 20px 15px;
+    font-size: 18px;
+    color: #fff;
+    margin: 5px;
+}
+.check{
+    width: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    padding-left: 250px;
+}
+.box {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 10px;
+    background-color: #e4e1e1;
+}
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    padding-top: 20px;
+}
+.btn {
+    background-color:  #e4e1e1;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 250px;
+}

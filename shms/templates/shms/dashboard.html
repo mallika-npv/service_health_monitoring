@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{%  static 'dash.css' %}">
+</head>
+<body style="background-color: #f4f4f4;">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function update_service_statuses() {
+                $.ajax({
+                    url: '/update_service_statuses/', // URL to your update_service_statuses endpoint
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        const services = response.services;
+                        services.forEach(service => {
+                            const statusElement = document.getElementById(`status-${service.id}`);
+                            if (statusElement) {
+                                if (service.status) {
+                                    statusElement.innerHTML = '<span style="color: green;">Up</span>';
+                                } else {
+                                    statusElement.innerHTML = '<span style="color: red;">Down</span>';
+                                }
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error occurred:', error);
+                    }
+                });
+            }
+            // Update service statuses every 10 seconds.
+            setInterval(update_service_statuses,10000);
+    </script>
+    <div class="sidebar">
+        <h2 style="color: #fff;padding: 10px 15px;">Welcome,</h2>
+        <h3 style="color: #fff;padding: 10px 15px;">Monitored Services in real-time</h3>        
+        {% for service in services %}
+        <div class="service">
+            {{ service.name }}
+            {% if service.status %}
+                <br>status:<span style="color: green;">Up</span>
+            {% else %}
+                <br>status:<span style="color: red;">Down</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div style="margin: 150px 0 0 20px;"><a href="{% url 'login' %}" style="color: #fff;">Logout</a></div>
+    </div>
+
+    <div class="content">
+        <h1 style="margin-left: 250px;">Moniter the Services</h1>
+        <h4 style="margin-left: 250px;">Select the services and time to get health</h4>
+        <form action="{% url 'dashboard' %}" method="POST">
+            {% csrf_token %}
+            <input type="date" name="selected_date"/>
+            <div><input type="number" name="dt" class="dt" min="0" max="10" step="0.01" value="0.00" style="margin:10px 250px;"></div>
+            <div class="check">          
+                <div class="box"><input type="checkbox" name="google" value="google" checked="no"/><label>google</label></div>
+                <div class="box"><input type="checkbox" name="facebook" value="facebook" checked="no"/><label>facebook</label></div>
+                <div class="box"><input type="checkbox" name="amazon" value="amazon" checked="no"/><label>amazon</label></div>
+                <div class="box"><input type="checkbox" name="twitter" value="twitter" checked="no"/><label>twitter</label></div>
+            </div>
+            <button type="submit" class="btn">Get Results</button>
+        </form>
+        <h3 style="margin-left: 250px;">Selected Items</h3>
+        <table>
+            <tr style="margin-left: 250px;">
+                <td>Date</td>
+                <td>Web Service</td>
+                <td>Down time</td>
+            </tr>
+            {% for i in items %}
+                <tr style="margin-left: 250px;">
+                    <td>{{ i.date }}</td>
+                    <td>{{ i.webs }}</td>
+                    <td>{{ i.dt }}</td>
+                </tr>
+            {% endfor %}
+          </table>
+    </div>
+</body>
+</html>
